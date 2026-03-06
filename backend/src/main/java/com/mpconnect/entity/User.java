@@ -6,11 +6,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,11 +14,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class User implements UserDetails {
 
     @Id
@@ -73,5 +63,113 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User() {}
+
+    public User(String id, String name, String email, String password, UserRole role, String constituency) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.constituency = constituency;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public String getConstituency() {
+        return constituency;
+    }
+
+    public void setConstituency(String constituency) {
+        this.constituency = constituency;
+    }
+
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
+    
+    public static class UserBuilder {
+        private String id;
+        private String name;
+        private String email;
+        private String password;
+        private UserRole role;
+        private String constituency;
+
+        public UserBuilder id(String id) {
+            this.id = id;
+            return this;
+        }
+        public UserBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+        public UserBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+        public UserBuilder role(UserRole role) {
+            this.role = role;
+            return this;
+        }
+        public UserBuilder constituency(String constituency) {
+            this.constituency = constituency;
+            return this;
+        }
+
+        public User build() {
+            User instance = new User();
+            instance.setId(this.id);
+            instance.setName(this.name);
+            instance.setEmail(this.email);
+            instance.setPassword(this.password);
+            instance.setRole(this.role);
+            instance.setConstituency(this.constituency);
+            return instance;
+        }
     }
 }
